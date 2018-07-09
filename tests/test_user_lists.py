@@ -1,6 +1,7 @@
 from pytest import fixture
 from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
+
+from pages.main_page import MainPage
 
 
 @fixture()
@@ -25,10 +26,7 @@ def test_user_lists_should_be_as_expected(driver):
                            "Explore Showroom"]
 
     driver.get("https://www.amazon.com")
-    
-    actions = ActionChains(driver)
-    actions.move_to_element(driver.find_element_by_id("nav-link-accountList")).perform()
-    your_lists = driver.find_elements_by_xpath("//div[@id='nav-al-wishlist']//span")
-    actual_your_list = [element.get_attribute("innerText") for element in your_lists]
+
+    actual_your_list = MainPage(driver).open_account_list()
 
     assert actual_your_list == expected_your_lists
