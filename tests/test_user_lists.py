@@ -1,12 +1,12 @@
 from pytest import fixture
-from selenium import webdriver
+from utils.driver_provider import DriverProvider
 
 from pages.main_page import MainPage
 
 
 @fixture()
 def driver(request):
-    web_driver = webdriver.Chrome()
+    web_driver = DriverProvider.select_driver("Chrome")
     request.addfinalizer(web_driver.quit)
     return web_driver
 
